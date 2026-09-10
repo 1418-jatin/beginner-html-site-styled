@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux agent' }
+    agent { label 'linux agent' }   // exactly same as agent config
 
     stages {
         stage('Build Docker Image') {
@@ -19,6 +19,6 @@ pipeline {
     }
 
     triggers {
-        githubPush()   // auto-trigger on GitHub push
+        githubPush()
     }
 }
