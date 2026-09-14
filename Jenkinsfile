@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 // Run kubectl on k8s-node via SSH
-                withCredentials([sshUserPrivateKey(credentialsId: 'ohio-key', keyFileVariable: 'PEM_KEY')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'jenkin-cred', keyFileVariable: 'PEM_KEY')]) {
                     sh '''
                     ssh -i $PEM_KEY -o StrictHostKeyChecking=no ubuntu@$K8S_NODE_IP "
                         kubectl delete deployment beginner-html-deployment --ignore-not-found=true &&
