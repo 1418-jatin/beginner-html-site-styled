@@ -39,11 +39,11 @@ pipeline {
                     ssh -i "$PEM_KEY" -o StrictHostKeyChecking=no ubuntu@"$K8S_NODE_IP" "mkdir -p ~/k8s"
                     scp -i "$PEM_KEY" -o StrictHostKeyChecking=no deployment.yml service.yml ubuntu@"$K8S_NODE_IP":~/k8s/
                     ssh -i "$PEM_KEY" -o StrictHostKeyChecking=no ubuntu@"$K8S_NODE_IP" '
-                        kubectl delete deployment beginner-html-deployment --ignore-not-found=true &&
-                        kubectl delete service beginner-html-service --ignore-not-found=true &&
-                        kubectl apply -f ~/k8s/deployment.yml &&
-                        kubectl apply -f ~/k8s/service.yml &&
-                        kubectl rollout status deployment/beginner-html-deployment
+                        kubectl --kubeconfig=/home/ubuntu/.kube/config delete deployment beginner-html-deployment --ignore-not-found=true &&
+                        kubectl --kubeconfig=/home/ubuntu/.kube/config delete service beginner-html-service --ignore-not-found=true &&
+                        kubectl --kubeconfig=/home/ubuntu/.kube/config apply -f ~/k8s/deployment.yml &&
+                        kubectl --kubeconfig=/home/ubuntu/.kube/config apply -f ~/k8s/service.yml &&
+                        kubectl --kubeconfig=/home/ubuntu/.kube/config rollout status deployment/beginner-html-deployment
                     '
                     '''
                 }
