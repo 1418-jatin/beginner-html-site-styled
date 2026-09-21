@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME  = "19901418/my-jenkins-python-app-ci-cd"
         IMAGE_TAG   = "${BUILD_NUMBER}"          // unique tag per build (was fixed "v1")
-        K8S_NODE_IP = "172.31.15.37"             // PRIVATE IP of k8s-node (same VPC as ci-agent; doesn't change on stop/start)
+        K8S_NODE_IP = "3.145.91.11"             // PRIVATE IP of k8s-node (same VPC as ci-agent; doesn't change on stop/start)
     }
 
     stages {
