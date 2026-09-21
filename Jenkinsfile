@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "19901418/my-jenkins-python-app-ci-cd"
         IMAGE_TAG  = "v1"
-        K8S_NODE_IP = "54.167.123.19"   // public IP of k8s-node
+        K8S_NODE_IP = "3.145.91.11"   // public IP of k8s-node
     }
 
     stages {
