@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "19901418/my-jenkins-python-app-ci-cd"
         IMAGE_TAG  = "v1"
-        K8S_NODE_IP = "3.145.91.11"   // public IP of k8s-node
+        //K8S_NODE_IP = "3.145.91.11"   // public IP of k8s-node
     }
 
     stages {
@@ -31,24 +31,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                // Run kubectl on k8s-node via SSH
-                withCredentials([sshUserPrivateKey(credentialsId: 'jenkin-cred', keyFileVariable: 'PEM_KEY')]) {
-                    sh '''
-                    ssh -i "$PEM_KEY" -o StrictHostKeyChecking=no ubuntu@"$K8S_NODE_IP" "mkdir -p ~/k8s"
-                    scp -i "$PEM_KEY" -o StrictHostKeyChecking=no deployment.yml service.yml ubuntu@"$K8S_NODE_IP":~/k8s/
-                    ssh -i "$PEM_KEY" -o StrictHostKeyChecking=no ubuntu@"$K8S_NODE_IP" '
-                        kubectl delete deployment beginner-html-deployment --ignore-not-found=true &&
-                        kubectl delete service beginner-html-service --ignore-not-found=true &&
-                        kubectl apply -f ~/k8s/deployment.yml &&
-                        kubectl apply -f ~/k8s/service.yml &&
-                        kubectl rollout status deployment/beginner-html-deployment
-                    '
-                    '''
-                }
-            }
-        }
+  
     }
 
     triggers {
