@@ -1,10 +1,9 @@
 pipeline {
-    agent { label 'linux agent' }   // exactly same as agent config
+    agent { label 'linux agent' }   // run only on your EC2 Jenkins agent
 
     environment {
         IMAGE_NAME = "19901418/my-jenkins-python-app-ci-cd"
         IMAGE_TAG  = "v1"
-        //K8S_NODE_IP = "3.145.91.11"   // public IP of k8s-node
     }
 
     stages {
@@ -31,7 +30,17 @@ pipeline {
             }
         }
 
-  
+        stage('Run Container on Port 99') {
+            steps {
+                sh '''
+                    # Stop and remove old container if it exists
+                    docker rm -f myapp || true
+
+                    # Run new container mapping host port 99 -> container port 80
+                    docker run -d --name myapp -p 99:80 ${IMAGE_NAME}:${IMAGE_TAG}
+                '''
+            }
+        }
     }
 
     triggers {
