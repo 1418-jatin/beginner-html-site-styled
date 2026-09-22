@@ -11,6 +11,6 @@ RUN rm -rf ./*
 COPY . .
 
 # Expose port 80 for web traffic
-EXPOSE 80
+EXPOSE 99
 
 # Nginx will auto-start via base image entrypoint
